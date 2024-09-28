@@ -1,0 +1,64 @@
+[project]
+channels = ["conda-forge", "conda", "main"]
+description = "A pixi setup to run CI"
+name = "pixi"
+platforms = ["osx-arm64", "linux-64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = ">=3.10"
+
+[pypi-dependencies]
+jax = ">=0.4.33"
+jaxlib = ">=0.4.33"
+numpy = ">=1.26.4"
+pint = ">=0.24.3"
+scipy = ">=1.14.1"
+scikit-learn = ">=1.5.2"
+tree-math = ">=0.2.1"
+dinosaur = { path = ".", editable = true }
+
+[environments]
+# implicit: default = ["default"]
+default = ["py311"] # implicit: default = ["py39", "default"]
+test = ["test"] # implicit: test = ["test", "default"]
+py311 = ["py311"] # implicit: py310 = ["py310", "default"]
+test310 = ["test", "py310", "xarray-utils"] # implicit: test39 = ["test", "py39", "default"]
+test311 = ["py311", "test", "xarray-utils"] # implicit: test39 = ["test", "py39", "default"]
+
+[feature.test.pypi-dependencies]
+pytest = ">=8.3.3, <9"
+chex = ">=0.1.86, <0.2"
+absl-py = ">=2.1.0, <3"
+
+[feature.xarray-utils.pypi-dependencies]
+xarray-beam = ">0.6"
+dask = ">=2024.8.0"
+fsspec = ">=2024.9.0"
+pandas = ">=2.2.3"
+xarray = ">=2024.9.0"
+xarray-tensorstore = ">=0.1.4"
+
+[feature.py310.dependencies]
+python = "~=3.10.0"
+
+[feature.py310.pypi-dependencies]
+dask = ">=2024.8.0, <2025"
+fsspec = ">=2024.9.0, <2025"
+pandas = ">=2.2.3, <3"
+xarray = ">=2024.9.0, <2025"
+xarray-beam = ">=0.6"
+xarray-tensorstore = ">=0.1.4, <0.2"
+
+[feature.py311.dependencies]
+python = "~=3.11.0"
+
+[feature.py311.pypi-dependencies]
+dask = ">=2024.8.0, <2025"
+fsspec = ">=2024.9.0, <2025"
+pandas = ">=2.2.3, <3"
+xarray = ">=2024.9.0, <2025"
+xarray-beam = ">=0.6"
+xarray-tensorstore = ">=0.1.4, <0.2"

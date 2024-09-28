@@ -45,3 +45,29 @@ jobs:
       # TODO(shoyer): re-enable regrid_test once we figure out how to install Beam on GitHub actions
       run: |
         pytest -v dinosaur --ignore=dinosaur/pipelines
+
+  test:
+    name: "python ${{ matrix.py }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        py: ["310", "311"]
+    steps:
+    - name: Cancel previous
+      uses: styfle/cancel-workflow-action@0.7.0
+      with:
+        access_token: ${{ github.token }}
+      if: ${{github.ref != 'refs/head/main'}}
+    - uses: actions/checkout@v2
+    - uses: prefix-dev/setup-pixi@v0.8.1
+      with:
+        pixi-version: v0.30.0
+        cache: true
+        frozen: true
+    - name: Install Dinosaur
+      run: |
+        pip install -e .[tests,xarray-utils]
+    - name: Run unit tests
+      run: |
+        pixi run -e test${{ matrix.py }} pytest -v dinosaur --ignore=dinosaur/pipelines
