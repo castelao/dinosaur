@@ -64,7 +64,7 @@ jobs:
       with:
         pixi-version: v0.30.0
         cache: true
-        frozzen: true
+        frozen: true
     - name: Install Dinosaur
       run: |
         pip install -e .[tests,xarray-utils]
